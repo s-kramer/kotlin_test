@@ -7,6 +7,7 @@
  *
  */
 
+import fizzbuzz.BUZZ
 import fizzbuzz.FIZZ
 import fizzbuzz.fizzBuzz
 import org.hamcrest.core.Is.`is`
@@ -24,5 +25,10 @@ class FizzBuzzTest {
     @Test
     fun intsDividableByThreeAreFizz() {
         assertThat(fizzBuzz(3), `is`(FIZZ))
+    }
+
+    @Test
+    fun intsDividableByFiveAreBuzz() {
+        assertThat(fizzBuzz(5), `is`(BUZZ))
     }
 }
