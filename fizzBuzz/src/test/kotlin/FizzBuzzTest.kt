@@ -37,4 +37,12 @@ class FizzBuzzTest {
     fun intsDividableByThreeAndFiveAreFizzBuzz() {
         assertThat(fizzBuzz(15), `is`(FIZZBUZZ))
     }
+
+    @Test
+    fun confirmationTestSequence() {
+        val actual = (0..15).map { i -> fizzBuzz(i) }.toList()
+        val expected : List<String> = listOf(FIZZBUZZ, "1", "2", FIZZ, "4", BUZZ, FIZZ, "7", "8", FIZZ, BUZZ, "11", FIZZ, "13", "14", FIZZBUZZ)
+
+        assertThat(actual, `is`(expected))
+    }
 }
