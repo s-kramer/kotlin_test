@@ -17,5 +17,6 @@ class FizzBuzzTest {
     @Test
     fun intIsReturnedAsStringIfNotDividable() {
         assertThat(fizzBuzz(1), `is`("1"))
+        assertThat(fizzBuzz(2), `is`("2"))
     }
 }
