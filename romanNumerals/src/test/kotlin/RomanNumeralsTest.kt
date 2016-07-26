@@ -1,0 +1,27 @@
+
+import org.hamcrest.core.Is
+import org.junit.Assert.assertThat
+import org.junit.Test
+import roman.romanToDecimal
+
+/**
+ * Created by skramer on 7/25/16.
+ * - single values, I, V, X, L, C, D, M
+ * - concatenated single values II, III, XX, DD
+ * - illegal concatenations IIII, XXXX,
+ * - mixed simple additive concatenations XI, VI, LX
+ * - mixed simple subtractive concatenations IX, XL
+ * - illegal subtractive concatenations e.g. IM, XXXL
+ * - acceptance test: 1999
+ * - boundary values: 1, 3000, 1000, 666, 999, 888
+ * - case sensitivity
+ */
+
+class RomanNumeralsTest {
+
+    @Test
+    fun numericalValueOfsingleLetterIsRecognized() {
+        assertThat(romanToDecimal("I"), Is.`is`(1))
+    }
+}
+
