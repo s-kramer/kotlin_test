@@ -2,7 +2,7 @@
 import org.hamcrest.core.Is
 import org.junit.Assert.assertThat
 import org.junit.Test
-import roman.romanToDecimal
+import roman.*
 
 /**
  * Created by skramer on 7/25/16.
@@ -20,12 +20,6 @@ import roman.romanToDecimal
 class RomanNumeralsTest {
 
     private val ROMAN_UNKNOWN: String = "Z"
-
-    private val ROMAN_ONE = "I"
-
-    private val ROMAN_FIVE: String = "V"
-
-    private val ROMAN_TEN: String = "X"
 
     @Test(expected = IllegalArgumentException::class)
     fun unknownLetterThrowsException() {
@@ -45,6 +39,11 @@ class RomanNumeralsTest {
     @Test
     fun numericalValueOfSingleLetterXIsRecognized() {
         assertThat(romanToDecimal(ROMAN_TEN), Is.`is`(10))
+    }
+
+    @Test
+    fun numericalValueOfSingleLetterLIsRecognized() {
+        assertThat(romanToDecimal(ROMAN_FIFTY), Is.`is`(50))
     }
 }
 

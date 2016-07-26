@@ -1,10 +1,19 @@
 package roman
 
+val ROMAN_ONE = "I"
+
+val ROMAN_FIVE: String = "V"
+
+val ROMAN_TEN: String = "X"
+
+val ROMAN_FIFTY: String = "L"
+
 fun romanToDecimal(romanString: String): Int {
     return when(romanString) {
-        "I" -> 1
-        "V" -> 5
-        "X" -> 10
+        ROMAN_ONE -> 1
+        ROMAN_FIVE -> 5
+        ROMAN_TEN -> 10
+        ROMAN_FIFTY -> 50
         else -> {
             throw IllegalArgumentException("Unknown roman character ${romanString}")
         }
