@@ -25,6 +25,8 @@ class RomanNumeralsTest {
 
     private val ROMAN_FIVE: String = "V"
 
+    private val ROMAN_TEN: String = "X"
+
     @Test(expected = IllegalArgumentException::class)
     fun unknownLetterThrowsException() {
         romanToDecimal(ROMAN_UNKNOWN)
@@ -38,6 +40,11 @@ class RomanNumeralsTest {
     @Test
     fun numericalValueOfSingleLetterVIsRecognized() {
         assertThat(romanToDecimal(ROMAN_FIVE), Is.`is`(5))
+    }
+
+    @Test
+    fun numericalValueOfSingleLetterXIsRecognized() {
+        assertThat(romanToDecimal(ROMAN_TEN), Is.`is`(10))
     }
 }
 
