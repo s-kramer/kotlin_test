@@ -6,7 +6,7 @@ import roman.romanToDecimal
 
 /**
  * Created by skramer on 7/25/16.
- * - single values, I, V, X, L, C, D, M
+ * - single values, ROMAN_ONE, V, X, L, C, D, M
  * - concatenated single values II, III, XX, DD
  * - illegal concatenations IIII, XXXX,
  * - mixed simple additive concatenations XI, VI, LX
@@ -19,9 +19,18 @@ import roman.romanToDecimal
 
 class RomanNumeralsTest {
 
+    private val ROMAN_UNKNOWN: String = "Z"
+
+    private val ROMAN_ONE = "I"
+
     @Test
-    fun numericalValueOfsingleLetterIsRecognized() {
-        assertThat(romanToDecimal("I"), Is.`is`(1))
+    fun numericalValueOfSingleLetterIIsRecognized() {
+        assertThat(romanToDecimal(ROMAN_ONE), Is.`is`(1))
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun unknownLetterThrowsException() {
+            romanToDecimal(ROMAN_UNKNOWN)
     }
 }
 
