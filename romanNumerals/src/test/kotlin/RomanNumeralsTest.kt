@@ -23,14 +23,21 @@ class RomanNumeralsTest {
 
     private val ROMAN_ONE = "I"
 
+    private val ROMAN_FIVE: String = "V"
+
+    @Test(expected = IllegalArgumentException::class)
+    fun unknownLetterThrowsException() {
+        romanToDecimal(ROMAN_UNKNOWN)
+    }
+
     @Test
     fun numericalValueOfSingleLetterIIsRecognized() {
         assertThat(romanToDecimal(ROMAN_ONE), Is.`is`(1))
     }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun unknownLetterThrowsException() {
-            romanToDecimal(ROMAN_UNKNOWN)
+    @Test
+    fun numericalValueOfSingleLetterVIsRecognized() {
+        assertThat(romanToDecimal(ROMAN_FIVE), Is.`is`(5))
     }
 }
 
