@@ -12,6 +12,8 @@ val ROMAN_HUNDRED: String = "C"
 
 val ROMAN_FIVE_HUNDRED: String = "D"
 
+val ROMAN_THOUSAND: String = "M"
+
 fun romanToDecimal(romanString: String): Int {
     return when(romanString) {
         ROMAN_ONE -> 1
@@ -20,6 +22,7 @@ fun romanToDecimal(romanString: String): Int {
         ROMAN_FIFTY -> 50
         ROMAN_HUNDRED -> 100
         ROMAN_FIVE_HUNDRED -> 500
+        ROMAN_THOUSAND -> 1000
         else -> {
             throw IllegalArgumentException("Unknown roman character ${romanString}")
         }
