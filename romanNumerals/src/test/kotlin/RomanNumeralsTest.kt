@@ -50,5 +50,10 @@ class RomanNumeralsTest {
     fun numericalValueOfSingleLetterCIsRecognized() {
         assertThat(romanToDecimal(ROMAN_HUNDRED), Is.`is`(100))
     }
+
+    @Test
+    fun numericalValueOfSingleLetterDIsRecognized() {
+        assertThat(romanToDecimal(ROMAN_FIVE_HUNDRED), Is.`is`(500))
+    }
 }
 
