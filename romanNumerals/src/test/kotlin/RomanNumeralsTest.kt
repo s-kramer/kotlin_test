@@ -15,6 +15,7 @@ import roman.*
  * - acceptance test: 1999
  * - boundary values: 1, 3000, 1000, 666, 999, 888
  * - case sensitivity
+ * - empty string
  */
 
 class RomanNumeralsTest {
@@ -77,6 +78,11 @@ class RomanNumeralsTest {
         assertThat(romanToDecimal(concatLetters(ROMAN_HUNDRED, ROMAN_HUNDRED)), Is.`is`(200))
         assertThat(romanToDecimal(concatLetters(ROMAN_FIVE_HUNDRED, ROMAN_FIVE_HUNDRED)), Is.`is`(1000))
         assertThat(romanToDecimal(concatLetters(ROMAN_THOUSAND, ROMAN_THOUSAND)), Is.`is`(2000))
+    }
+
+    @Test
+    fun concatenationOfThreeRomanOnesIsAccepted() {
+        assertThat(romanToDecimal(concatLetters(ROMAN_ONE, ROMAN_ONE, ROMAN_ONE)), Is.`is`(3))
     }
 }
 
