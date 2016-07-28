@@ -61,12 +61,22 @@ class RomanNumeralsTest {
         assertThat(romanToDecimal(ROMAN_THOUSAND), Is.`is`(1000))
     }
 
+    private fun concatLetters(vararg value: Char) = StringBuilder().append(value).toString()
+
     @Test
     fun numericalValueOfTwoSingleLettersGivesTheirSum() {
         val romanNumber = concatLetters(ROMAN_ONE, ROMAN_ONE)
         assertThat(romanToDecimal(romanNumber), Is.`is`(2))
     }
 
-    private fun concatLetters(vararg value: Char) = StringBuilder().append(value).toString()
+    @Test
+    fun simpleConcatenationsConfirmationTest() {
+        assertThat(romanToDecimal(concatLetters(ROMAN_FIVE, ROMAN_FIVE)), Is.`is`(10))
+        assertThat(romanToDecimal(concatLetters(ROMAN_TEN, ROMAN_TEN)), Is.`is`(20))
+        assertThat(romanToDecimal(concatLetters(ROMAN_FIFTY, ROMAN_FIFTY)), Is.`is`(100))
+        assertThat(romanToDecimal(concatLetters(ROMAN_HUNDRED, ROMAN_HUNDRED)), Is.`is`(200))
+        assertThat(romanToDecimal(concatLetters(ROMAN_FIVE_HUNDRED, ROMAN_FIVE_HUNDRED)), Is.`is`(1000))
+        assertThat(romanToDecimal(concatLetters(ROMAN_THOUSAND, ROMAN_THOUSAND)), Is.`is`(2000))
+    }
 }
 
