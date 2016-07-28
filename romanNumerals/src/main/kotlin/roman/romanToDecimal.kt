@@ -1,21 +1,27 @@
 package roman
 
-val ROMAN_ONE = "I"
+val ROMAN_ONE = 'I'
 
-val ROMAN_FIVE: String = "V"
+val ROMAN_FIVE = 'V'
 
-val ROMAN_TEN: String = "X"
+val ROMAN_TEN = 'X'
 
-val ROMAN_FIFTY: String = "L"
+val ROMAN_FIFTY = 'L'
 
-val ROMAN_HUNDRED: String = "C"
+val ROMAN_HUNDRED = 'C'
 
-val ROMAN_FIVE_HUNDRED: String = "D"
+val ROMAN_FIVE_HUNDRED = 'D'
 
-val ROMAN_THOUSAND: String = "M"
+val ROMAN_THOUSAND = 'M'
+
+fun romanToDecimal(romanLetter: Char): Int = convertCharToNumber(romanLetter)
 
 fun romanToDecimal(romanString: String): Int {
-    return when(romanString) {
+    return romanString.map ( ::convertCharToNumber ).sum()
+}
+
+private fun convertCharToNumber(romanString: Char): Int {
+    return when (romanString) {
         ROMAN_ONE -> 1
         ROMAN_FIVE -> 5
         ROMAN_TEN -> 10

@@ -60,5 +60,13 @@ class RomanNumeralsTest {
     fun numericalValueOfSingleLetterMIsRecognized() {
         assertThat(romanToDecimal(ROMAN_THOUSAND), Is.`is`(1000))
     }
+
+    @Test
+    fun numericalValueOfTwoSingleLettersGivesTheirSum() {
+        val romanNumber = concatLetters(ROMAN_ONE, ROMAN_ONE)
+        assertThat(romanToDecimal(romanNumber), Is.`is`(2))
+    }
+
+    private fun concatLetters(vararg value: Char) = StringBuilder().append(value).toString()
 }
 
