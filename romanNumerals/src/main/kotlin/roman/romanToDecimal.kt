@@ -16,9 +16,32 @@ val ROMAN_THOUSAND = 'M'
 
 fun romanToDecimal(romanLetter: Char): Int = convertCharToNumber(romanLetter)
 
+private val MAX_REPETITIONS = 3
+
 fun romanToDecimal(romanString: String): Int {
-    return romanString.map ( ::convertCharToNumber ).sum()
+    checkArgumentCorrectness(romanString)
+
+    return parseToIntList(romanString).sum()
 }
+
+private fun checkArgumentCorrectness(romanString: String) {
+    var repetitionCount = 1
+    var lastNumber = romanString[0]
+    val iterator = romanString.substring(1).iterator()
+    while (iterator.hasNext()) {
+        val number = iterator.next()
+        if (lastNumber == number) {
+            if (++repetitionCount > MAX_REPETITIONS) {
+                throw IllegalArgumentException("$MAX_REPETITIONS or more identical characters are not allowed")
+            }
+        } else {
+            lastNumber = number
+            repetitionCount = 0
+        }
+    }
+}
+
+private fun parseToIntList(romanString: String): List<Int> = romanString.map(::convertCharToNumber)
 
 private fun convertCharToNumber(romanString: Char): Int {
     return when (romanString) {

@@ -16,6 +16,8 @@ import roman.*
  * - boundary values: 1, 3000, 1000, 666, 999, 888
  * - case sensitivity
  * - empty string
+ * - VX, XXXXL, LXXX, LXXXX, IIX
+ * - IX, XXL
  */
 
 class RomanNumeralsTest {
@@ -83,6 +85,11 @@ class RomanNumeralsTest {
     @Test
     fun concatenationOfThreeRomanOnesIsAccepted() {
         assertThat(romanToDecimal(concatLetters(ROMAN_ONE, ROMAN_ONE, ROMAN_ONE)), Is.`is`(3))
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun concatenationOfFourOnesIsRejected() {
+        romanToDecimal(concatLetters(ROMAN_ONE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE))
     }
 }
 
