@@ -43,7 +43,7 @@ private fun checkLetterRepetitions(romanNumbers: Array<out RomanNumber>) {
             }
         } else {
             lastNumber = number
-            repetitionCount = 0
+            repetitionCount = 1
         }
     }
 }

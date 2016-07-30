@@ -129,5 +129,16 @@ class RomanNumeralsTest {
         romanToDecimal(ROMAN_THOUSAND, ROMAN_THOUSAND, ROMAN_THOUSAND, ROMAN_THOUSAND)
     }
 
+    @Test
+    fun additiveConcateationOfVAndI() {
+        assertThat(romanToDecimal(ROMAN_FIVE, ROMAN_ONE), `is`(6))
+        assertThat(romanToDecimal(ROMAN_FIVE, ROMAN_ONE, ROMAN_ONE), `is`(7))
+        assertThat(romanToDecimal(ROMAN_FIVE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE), `is`(8))
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun additiveConcateationOfVAndFourIIsRejected() {
+        romanToDecimal(ROMAN_FIVE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE)
+    }
 }
 
