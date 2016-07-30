@@ -46,7 +46,7 @@ class GroupAdjacentTest() {
 
     @Test
     fun multipleNotSubSequentOccurrencesOfDifferentElements() {
-        var inputArray = arrayListOf<Int>()
+        val inputArray = arrayListOf<Int>()
         for (i in 1..10) {
             inputArray.addAll(1..10)
         }
@@ -56,4 +56,14 @@ class GroupAdjacentTest() {
 
         assertThat(inputArray.groupAdjacent(), `is`(expectedOutput.toList()))
     }
+
+    @Test
+    fun multipleNotSubSequentOccurrencesOfDifferentElementsWithRepetitions() {
+        val inputArray = arrayListOf<Int>()
+        (1..10).forEach { inputArray.addAll(listOf(it, it, it)) }
+
+        val expected = (1..10).map { listOf(it, it, it) }.toList()
+        assertThat(inputArray.groupAdjacent(), `is`(expected.toList()))
+    }
+
 }
