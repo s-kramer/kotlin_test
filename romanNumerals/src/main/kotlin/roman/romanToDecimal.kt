@@ -19,12 +19,21 @@ fun romanToDecimal(romanLetter: Char): Int = convertCharToNumber(romanLetter)
 private val MAX_REPETITIONS = 3
 
 fun romanToDecimal(romanString: String): Int {
-    checkArgumentCorrectness(romanString)
+    checkArguments(romanString)
 
-    return parseToIntList(romanString).sum()
+    return parseToIntList(romanString.toUpperCase()).sum()
 }
 
-private fun checkArgumentCorrectness(romanString: String) {
+fun  checkArguments(romanString: String) {
+    checkLength(romanString)
+    checkLetterRepetitions(romanString)
+}
+
+fun checkLength(romanString: String) {
+    if (romanString.length == 0) throw IllegalArgumentException("Roman number string cannot be empty")
+}
+
+private fun checkLetterRepetitions(romanString: String) {
     var repetitionCount = 1
     var lastNumber = romanString[0]
     val iterator = romanString.substring(1).iterator()
