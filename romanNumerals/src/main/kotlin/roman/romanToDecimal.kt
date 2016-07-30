@@ -22,12 +22,16 @@ fun romanToDecimal(romanLetter: RomanNumber): Int = convertSingleRomanNumberToDe
 fun romanToDecimal(romanNumber: RomanNumber, vararg romanNumbers: RomanNumber): Int {
     val romanNumberArray = arrayOf(romanNumber, *romanNumbers)
 
-    checkArguments(romanNumberArray)
+    checkPreconditions(romanNumberArray)
 
+    return convertToDecimal(romanNumberArray)
+}
+
+private fun convertToDecimal(romanNumberArray: Array<RomanNumber>): Int {
     return convertRomanNumbersToDecimal(romanNumberArray).sum()
 }
 
-fun checkArguments(romanNumbers: Array<out RomanNumber>) {
+private fun checkPreconditions(romanNumbers: Array<out RomanNumber>) {
     checkLetterRepetitions(romanNumbers)
 }
 
@@ -39,7 +43,8 @@ private fun checkLetterRepetitions(romanNumbers: Array<out RomanNumber>) {
         val number = iterator.next()
         if (lastNumber == number) {
             if (++repetitionCount > number.max_repetition) {
-                throw IllegalArgumentException("Concatenation of ${number.max_repetition} characters ${number.name} is not allowed")
+                throw IllegalArgumentException(
+                        "Concatenation of ${number.max_repetition} characters ${number.name} is not allowed")
             }
         } else {
             lastNumber = number
@@ -48,7 +53,8 @@ private fun checkLetterRepetitions(romanNumbers: Array<out RomanNumber>) {
     }
 }
 
-private fun convertRomanNumbersToDecimal(romanNumber: Array<out RomanNumber>): List<Int> = romanNumber.map(::convertSingleRomanNumberToDecimal)
+private fun convertRomanNumbersToDecimal(romanNumber: Array<out RomanNumber>): List<Int> = romanNumber.map(
+        ::convertSingleRomanNumberToDecimal)
 
 private fun convertSingleRomanNumberToDecimal(romanNumber: RomanNumber): Int {
     return romanNumber.number

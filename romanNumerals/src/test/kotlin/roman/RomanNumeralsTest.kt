@@ -1,3 +1,5 @@
+package roman
+
 import org.hamcrest.core.Is.`is`
 import org.junit.Assert.assertThat
 import org.junit.Test
@@ -16,6 +18,7 @@ import roman.romanToDecimal
  * - acceptance test: 1999
  * - boundary values: 1, 3000, 1000, 666, 999, 888
  * - exception message text
+ * - convert from string? (case sensitivity, empty string, unknown letter)
  */
 
 class RomanNumeralsTest {
@@ -131,24 +134,24 @@ class RomanNumeralsTest {
     }
 
     @Test
-    fun additiveConcateationOfFiveAndOne() {
+    fun additiveConcatenationOfFiveAndOne() {
         assertThat(romanToDecimal(ROMAN_FIVE, ROMAN_ONE), `is`(6))
         assertThat(romanToDecimal(ROMAN_FIVE, ROMAN_ONE, ROMAN_ONE), `is`(7))
         assertThat(romanToDecimal(ROMAN_FIVE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE), `is`(8))
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun additiveConcateationOfFiveAndFourOnesIsRejected() {
+    fun additiveConcatenationOfFiveAndFourOnesIsRejected() {
         romanToDecimal(ROMAN_FIVE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE)
     }
 
     @Test
-    fun additiveConcateationOfTenAndFive() {
+    fun additiveConcatenationOfTenAndFive() {
         assertThat(romanToDecimal(ROMAN_TEN, ROMAN_FIVE), `is`(15))
     }
 
     @Test
-    fun additiveConcateationOfTenFiveAndThreeOnes() {
+    fun additiveConcatenationOfTenFiveAndThreeOnes() {
         assertThat(romanToDecimal(ROMAN_TEN, ROMAN_FIVE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE), `is`(18))
     }
 
@@ -158,6 +161,11 @@ class RomanNumeralsTest {
                                   ROMAN_HUNDRED, ROMAN_HUNDRED, ROMAN_HUNDRED,
                                   ROMAN_FIFTY, ROMAN_TEN, ROMAN_TEN, ROMAN_TEN,
                                   ROMAN_FIVE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE), `is`(3888))
+    }
+
+    @Test
+    fun subtractiveConcatenationOfFiveAndOne() {
+        assertThat(romanToDecimal(ROMAN_ONE, ROMAN_FIVE), `is`(4))
     }
 
 }
