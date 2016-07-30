@@ -109,6 +109,11 @@ class RomanNumeralsTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
+    fun concatenationOfFourHundredsIsRejected() {
+        romanToDecimal(ROMAN_HUNDRED, ROMAN_HUNDRED, ROMAN_HUNDRED, ROMAN_HUNDRED)
+    }
+
+    @Test(expected = IllegalArgumentException::class)
     fun concatenationOfTwoFiveHundredsIsRejected() {
         romanToDecimal(ROMAN_FIVE_HUNDRED, ROMAN_FIVE_HUNDRED)
     }
