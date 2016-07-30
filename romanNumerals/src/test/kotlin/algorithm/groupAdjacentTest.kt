@@ -10,8 +10,9 @@ import org.junit.Test
  * - <s>single element</s>
  * - <s>two equal elements</s>
  * - <s>two different elements</s>
- * - all elements different return list of pairs of all elements each with 1
+ * - <s>all elements different return list of lists, each with one element</s>
  * - empty list
+ * - list with multiple, not subsequent occurrences of an element
  */
 
 class GroupAdjacentTest() {
@@ -41,5 +42,18 @@ class GroupAdjacentTest() {
         val inputArray = (1..100).toList()
         val expectedOutput = (1..100).map { listOf(it) }
         assertThat(inputArray.groupAdjacent(), `is`(expectedOutput))
+    }
+
+    @Test
+    fun multipleNotSubSequentOccurrencesOfDifferentElements() {
+        var inputArray = arrayListOf<Int>()
+        for (i in 1..10) {
+            inputArray.addAll(1..10)
+        }
+        assertThat(inputArray.size, `is`(100))
+
+        val expectedOutput = inputArray.map { listOf(it) }
+
+        assertThat(inputArray.groupAdjacent(), `is`(expectedOutput.toList()))
     }
 }
