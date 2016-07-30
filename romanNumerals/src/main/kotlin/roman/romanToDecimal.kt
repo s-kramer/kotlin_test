@@ -8,7 +8,7 @@ enum class RomanNumber(val representation: Char, val number: Int, val max_repeti
 
     ROMAN_TEN('X', 10),
 
-    ROMAN_FIFTY('L', 50),
+    ROMAN_FIFTY('L', 50, max_repetition = 1),
 
     ROMAN_HUNDRED('C', 100),
 

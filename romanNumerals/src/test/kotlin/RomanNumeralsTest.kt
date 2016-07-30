@@ -84,8 +84,13 @@ class RomanNumeralsTest {
     }
 
     @Test
-    fun twoRomanFiftiesCanBeConcatenated() {
-        assertThat(romanToDecimal(ROMAN_FIFTY, ROMAN_FIFTY), `is`(100))
+    fun threeRomanTensCanBeConcatenated() {
+        assertThat(romanToDecimal(ROMAN_TEN, ROMAN_TEN, ROMAN_TEN), `is`(30))
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun concatenationOfTwoFiftiesIsRejected() {
+        romanToDecimal(ROMAN_FIFTY, ROMAN_FIFTY)
     }
 
     @Test
