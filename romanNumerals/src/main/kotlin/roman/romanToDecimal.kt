@@ -1,20 +1,20 @@
 package roman
 
-enum class RomanNumber(val representation: Char, val number: Int, val max_repetition: Int = 3) {
+enum class RomanNumber(val number: Int, val max_repetition: Int = 3) {
 
-    ROMAN_ONE('I', 1),
+    ROMAN_ONE(1),
 
-    ROMAN_FIVE('V', 5, max_repetition = 1),
+    ROMAN_FIVE(5, max_repetition = 1),
 
-    ROMAN_TEN('X', 10),
+    ROMAN_TEN(10),
 
-    ROMAN_FIFTY('L', 50, max_repetition = 1),
+    ROMAN_FIFTY(50, max_repetition = 1),
 
-    ROMAN_HUNDRED('C', 100),
+    ROMAN_HUNDRED(100),
 
-    ROMAN_FIVE_HUNDRED('D', 500, max_repetition = 1),
+    ROMAN_FIVE_HUNDRED(500, max_repetition = 1),
 
-    ROMAN_THOUSAND('M', 1000);
+    ROMAN_THOUSAND(1000);
 }
 
 fun romanToDecimal(romanLetter: RomanNumber): Int = convertSingleRomanNumberToDecimal(romanLetter)
@@ -39,7 +39,7 @@ private fun checkLetterRepetitions(romanNumbers: Array<out RomanNumber>) {
         val number = iterator.next()
         if (lastNumber == number) {
             if (++repetitionCount > number.max_repetition) {
-                throw IllegalArgumentException("Concatenation of ${number.max_repetition} characters ${number.representation} is not allowed")
+                throw IllegalArgumentException("Concatenation of ${number.max_repetition} characters ${number.name} is not allowed")
             }
         } else {
             lastNumber = number
