@@ -7,6 +7,6 @@ package algorithm
  */
 
 fun List<Int>.groupAdjacent(): List<Pair<Int, Int>> {
-    val list = mutableListOf((1 to 1))
+    val list = mutableListOf((1 to size))
     return list
 }
