@@ -12,7 +12,7 @@ enum class RomanNumber(val representation: Char, val number: Int, val max_repeti
 
     ROMAN_HUNDRED('C', 100),
 
-    ROMAN_FIVE_HUNDRED('D', 500),
+    ROMAN_FIVE_HUNDRED('D', 500, max_repetition = 1),
 
     ROMAN_THOUSAND('M', 1000);
 }

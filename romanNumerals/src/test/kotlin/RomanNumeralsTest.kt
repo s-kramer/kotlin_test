@@ -103,9 +103,9 @@ class RomanNumeralsTest {
         assertThat(romanToDecimal(ROMAN_HUNDRED, ROMAN_HUNDRED, ROMAN_HUNDRED), `is`(300))
     }
 
-    @Test
-    fun twoRomanFiveHundredsCanBeConcatenated() {
-        assertThat(romanToDecimal(ROMAN_FIVE_HUNDRED, ROMAN_FIVE_HUNDRED), `is`(1000))
+    @Test(expected = IllegalArgumentException::class)
+    fun concatenationOfTwoFiveHundredsIsRejected() {
+        romanToDecimal(ROMAN_FIVE_HUNDRED, ROMAN_FIVE_HUNDRED)
     }
 
     @Test
