@@ -12,9 +12,13 @@ fun <E> List<E>.groupAdjacentBy(binPredicate: (E, E) -> Boolean): List<List<E>> 
     var currentPrototypeIndex = 0
 
     while (currentPrototypeIndex < this.size) {
-        val list = subList(currentPrototypeIndex, this.size).takeWhile { binPredicate(it, this[currentPrototypeIndex]) }
-        result.add(list)
-        currentPrototypeIndex += list.size
+        val list = subList(currentPrototypeIndex + 1, this.size).takeWhile { binPredicate(this[currentPrototypeIndex], it) }
+
+        val partialResult = arrayListOf(this[currentPrototypeIndex])
+        partialResult.addAll(list)
+        result.add(partialResult)
+
+        currentPrototypeIndex += 1 + list.size
     }
 
     return result
