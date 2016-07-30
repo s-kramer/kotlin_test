@@ -6,7 +6,7 @@ import org.junit.Test
 
 /**
  * Created by skramer on 7/30/16.
- * Tests for groupAdjacent algorithm.
+ * Tests for groupAdjacentBy algorithm.
  * - <s>single element</s>
  * - <s>two equal elements</s>
  * - <s>two different elements</s>
@@ -18,30 +18,30 @@ import org.junit.Test
 class GroupAdjacentTest() {
     @Test
     fun singleElementIsPlacedInSinglePair() {
-        assertThat(listOf(1).groupAdjacent(), `is`(listOf(listOf(1))))
+        assertThat(listOf(1).groupAdjacentBy(Int::equals), `is`(listOf(listOf(1))))
     }
 
     @Test
     fun twoEqualElementsReturnListWithOnlyOnePair() {
-        assertThat(listOf(1, 1).groupAdjacent(), `is`(listOf(listOf(1, 1))))
+        assertThat(listOf(1, 1).groupAdjacentBy(Int::equals), `is`(listOf(listOf(1, 1))))
     }
 
     @Test
     fun multipleEqualElementsReturnListWithOnlyOnePair() {
         val equalElements = (1 .. 100).map { 1 }.toList()
-        assertThat(equalElements.groupAdjacent(), `is`(listOf(equalElements)))
+        assertThat(equalElements.groupAdjacentBy(Int::equals), `is`(listOf(equalElements)))
     }
 
     @Test
     fun twoDifferentElementsReturnPairEach() {
-        assertThat(listOf(1, 2).groupAdjacent(), `is`(listOf(listOf(1), listOf(2))))
+        assertThat(listOf(1, 2).groupAdjacentBy(Int::equals), `is`(listOf(listOf(1), listOf(2))))
     }
 
     @Test
     fun allElementsDifferentReturnListForEachEntry() {
         val inputArray = (1..100).toList()
         val expectedOutput = (1..100).map { listOf(it) }
-        assertThat(inputArray.groupAdjacent(), `is`(expectedOutput))
+        assertThat(inputArray.groupAdjacentBy(Int::equals), `is`(expectedOutput))
     }
 
     @Test
@@ -54,7 +54,7 @@ class GroupAdjacentTest() {
 
         val expectedOutput = inputArray.map { listOf(it) }
 
-        assertThat(inputArray.groupAdjacent(), `is`(expectedOutput.toList()))
+        assertThat(inputArray.groupAdjacentBy(Int::equals), `is`(expectedOutput.toList()))
     }
 
     @Test
@@ -63,13 +63,13 @@ class GroupAdjacentTest() {
         (1..10).forEach { inputArray.addAll(listOf(it, it, it)) }
 
         val expected = (1..10).map { listOf(it, it, it) }.toList()
-        assertThat(inputArray.groupAdjacent(), `is`(expected.toList()))
+        assertThat(inputArray.groupAdjacentBy(Int::equals), `is`(expected.toList()))
     }
 
     @Test
     fun emptyList() {
         val expected: List<List<Int>> = listOf()
-        val actual: List<List<Int>> = listOf<Int>().groupAdjacent()
+        val actual: List<List<Int>> = listOf<Int>().groupAdjacentBy(Int::equals)
         assertThat(actual, `is`(expected))
     }
 }
