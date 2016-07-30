@@ -19,10 +19,12 @@ enum class RomanNumber(val representation: Char, val number: Int, val max_repeti
 
 fun romanToDecimal(romanLetter: RomanNumber): Int = convertSingleRomanNumberToDecimal(romanLetter)
 
-fun romanToDecimal(vararg romanNumbers: RomanNumber): Int {
-    checkArguments(romanNumbers)
+fun romanToDecimal(romanNumber: RomanNumber, vararg romanNumbers: RomanNumber): Int {
+    val romanNumberArray = arrayOf(romanNumber, *romanNumbers)
 
-    return convertRomanNumbersToDecimal(romanNumbers).sum()
+    checkArguments(romanNumberArray)
+
+    return convertRomanNumbersToDecimal(romanNumberArray).sum()
 }
 
 fun checkArguments(romanNumbers: Array<out RomanNumber>) {

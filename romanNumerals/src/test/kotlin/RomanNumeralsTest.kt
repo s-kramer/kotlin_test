@@ -19,16 +19,10 @@ import roman.romanToDecimal
  * <s>- empty string</s>
  * - VX, XXXXL, LXXX, LXXXX, IIX
  * - IX, XXL
- * - todo: require at least one argument
  * - todo: split the confirmation test
  */
 
 class RomanNumeralsTest {
-
-    @Test(expected = IllegalArgumentException::class)
-    fun emptyNumberThrows() {
-        romanToDecimal()
-    }
 
     @Test
     fun numericalValueOfSingleLetterIIsRecognized() {
