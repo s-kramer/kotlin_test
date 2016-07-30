@@ -15,6 +15,7 @@ import roman.romanToDecimal
  * - illegal subtractive concatenations e.g. IM, XXXL, VX, XXXXL, LXXX, LXXXX, IIX
  * - acceptance test: 1999
  * - boundary values: 1, 3000, 1000, 666, 999, 888
+ * - exception message text
  */
 
 class RomanNumeralsTest {
@@ -130,15 +131,25 @@ class RomanNumeralsTest {
     }
 
     @Test
-    fun additiveConcateationOfVAndI() {
+    fun additiveConcateationOfFiveAndOne() {
         assertThat(romanToDecimal(ROMAN_FIVE, ROMAN_ONE), `is`(6))
         assertThat(romanToDecimal(ROMAN_FIVE, ROMAN_ONE, ROMAN_ONE), `is`(7))
         assertThat(romanToDecimal(ROMAN_FIVE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE), `is`(8))
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun additiveConcateationOfVAndFourIIsRejected() {
+    fun additiveConcateationOfFiveAndFourOnesIsRejected() {
         romanToDecimal(ROMAN_FIVE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE)
     }
-}
 
+    @Test
+    fun additiveConcateationOfTenAndFive() {
+        assertThat(romanToDecimal(ROMAN_TEN, ROMAN_FIVE), `is`(15))
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun additiveConcateationOfTenAndTwoFives() {
+        romanToDecimal(ROMAN_TEN, ROMAN_FIVE, ROMAN_FIVE)
+    }
+
+}
