@@ -25,4 +25,10 @@ class GroupAdjacentTest() {
     fun twoEqualElementsReturnListWithOnlyOnePair() {
         assertThat(listOf(1, 1).groupAdjacent(), `is`(listOf(1 to 2)))
     }
+
+    @Test
+    fun multipleEqualElementsReturnListWithOnlyOnePair() {
+        val equalElements = (1 .. 100).map { 1 }.toList()
+        assertThat(equalElements.groupAdjacent(), `is`(listOf(1 to 100)))
+    }
 }
