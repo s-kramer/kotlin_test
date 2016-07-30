@@ -11,8 +11,8 @@ import org.junit.Test
  * - <s>two equal elements</s>
  * - <s>two different elements</s>
  * - <s>all elements different return list of lists, each with one element</s>
- * - empty list
- * - list with multiple, not subsequent occurrences of an element
+ * - <s>empty list</s>
+ * <s>- list with multiple, not subsequent occurrences of an element</s>
  */
 
 class GroupAdjacentTest() {
@@ -66,4 +66,10 @@ class GroupAdjacentTest() {
         assertThat(inputArray.groupAdjacent(), `is`(expected.toList()))
     }
 
+    @Test
+    fun emptyList() {
+        val expected: List<List<Int>> = listOf()
+        val actual: List<List<Int>> = listOf<Int>().groupAdjacent()
+        assertThat(actual, `is`(expected))
+    }
 }

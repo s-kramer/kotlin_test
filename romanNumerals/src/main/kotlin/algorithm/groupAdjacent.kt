@@ -7,7 +7,7 @@ package algorithm
  */
 
 fun <E> List<E>.groupAdjacent(): List<List<E>> {
-    var result = arrayListOf<List<E>>()
+    val result = arrayListOf<List<E>>()
 
     var currentPrototypeIndex = 0
 
