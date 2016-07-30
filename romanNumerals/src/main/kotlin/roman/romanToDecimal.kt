@@ -28,12 +28,7 @@ fun romanToDecimal(romanNumber: RomanNumber, vararg romanNumbers: RomanNumber): 
 }
 
 fun checkArguments(romanNumbers: Array<out RomanNumber>) {
-    checkLength(romanNumbers)
     checkLetterRepetitions(romanNumbers)
-}
-
-fun checkLength(romanNumbers: Array<out RomanNumber>) {
-    if (romanNumbers.size == 0) throw IllegalArgumentException("Roman number string cannot be empty")
 }
 
 private fun checkLetterRepetitions(romanNumbers: Array<out RomanNumber>) {
