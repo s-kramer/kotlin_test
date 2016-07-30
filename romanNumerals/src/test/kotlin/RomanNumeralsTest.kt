@@ -112,5 +112,10 @@ class RomanNumeralsTest {
     fun twoRomanThousandsCanBeConcatenated() {
         assertThat(romanToDecimal(ROMAN_THOUSAND, ROMAN_THOUSAND), `is`(2000))
     }
+
+    @Test
+    fun threeRomanThousandsCanBeConcatenated() {
+        assertThat(romanToDecimal(ROMAN_THOUSAND, ROMAN_THOUSAND, ROMAN_THOUSAND), `is`(3000))
+    }
 }
 
