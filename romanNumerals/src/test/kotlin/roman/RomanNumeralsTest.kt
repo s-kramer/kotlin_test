@@ -4,7 +4,6 @@ import org.hamcrest.core.Is.`is`
 import org.junit.Assert.assertThat
 import org.junit.Test
 import roman.RomanNumber.*
-import roman.romanToDecimal
 
 /**
  * Created by skramer on 7/25/16.
@@ -166,6 +165,11 @@ class RomanNumeralsTest {
     @Test
     fun subtractiveConcatenationOfFiveAndOne() {
         assertThat(romanToDecimal(ROMAN_ONE, ROMAN_FIVE), `is`(4))
+        assertThat(romanToDecimal(ROMAN_ONE, ROMAN_TEN), `is`(9))
+        assertThat(romanToDecimal(ROMAN_TEN, ROMAN_FIFTY), `is`(40))
+        assertThat(romanToDecimal(ROMAN_TEN, ROMAN_HUNDRED), `is`(90))
+        assertThat(romanToDecimal(ROMAN_HUNDRED, ROMAN_FIVE_HUNDRED), `is`(400))
+        assertThat(romanToDecimal(ROMAN_HUNDRED, ROMAN_THOUSAND), `is`(900))
     }
 
 }
