@@ -1,4 +1,3 @@
-
 import org.hamcrest.core.Is.`is`
 import org.junit.Assert.assertThat
 import org.junit.Test
@@ -10,7 +9,8 @@ import roman.romanToDecimal
  * - <s>single values, ROMAN_ONE, V, X, L, C, D, M</s>
  * - <s>concatenated single values II, III, XX, DD</s>
  * - <s>illegal concatenations IIII, XXXX</s>
- * - mixed simple additive concatenations XI, VI, LX
+ * - <s>mixed simple additive concatenations XI, VI, LX</s>
+ * - <s>MMMDCCCLXXXVIII == 3888</s>
  * - mixed simple subtractive concatenations IX, XL
  * - illegal subtractive concatenations e.g. IM, XXXL, VX, XXXXL, LXXX, LXXXX, IIX
  * - acceptance test: 1999
@@ -147,9 +147,17 @@ class RomanNumeralsTest {
         assertThat(romanToDecimal(ROMAN_TEN, ROMAN_FIVE), `is`(15))
     }
 
-    @Test(expected = IllegalArgumentException::class)
-    fun additiveConcateationOfTenAndTwoFives() {
-        romanToDecimal(ROMAN_TEN, ROMAN_FIVE, ROMAN_FIVE)
+    @Test
+    fun additiveConcateationOfTenFiveAndThreeOnes() {
+        assertThat(romanToDecimal(ROMAN_TEN, ROMAN_FIVE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE), `is`(18))
+    }
+
+    @Test
+    fun maximalAdditiveConcatenation() {
+        assertThat(romanToDecimal(ROMAN_THOUSAND, ROMAN_THOUSAND, ROMAN_THOUSAND, ROMAN_FIVE_HUNDRED,
+                                  ROMAN_HUNDRED, ROMAN_HUNDRED, ROMAN_HUNDRED,
+                                  ROMAN_FIFTY, ROMAN_TEN, ROMAN_TEN, ROMAN_TEN,
+                                  ROMAN_FIVE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE), `is`(3888))
     }
 
 }
