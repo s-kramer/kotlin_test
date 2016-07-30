@@ -19,7 +19,6 @@ import roman.romanToDecimal
  * <s>- empty string</s>
  * - VX, XXXXL, LXXX, LXXXX, IIX
  * - IX, XXL
- * - todo: split the confirmation test
  */
 
 class RomanNumeralsTest {
@@ -60,32 +59,48 @@ class RomanNumeralsTest {
     }
 
     @Test
-    fun numericalValueOfTwoSingleLettersGivesTheirSum() {
+    fun twoRomanOnesCanBeConcatenated() {
         assertThat(romanToDecimal(ROMAN_ONE, ROMAN_ONE), `is`(2))
     }
 
     @Test
-    fun simpleConcatenationsConfirmationTest() {
-        assertThat(romanToDecimal(ROMAN_TEN, ROMAN_TEN), `is`(20))
-        assertThat(romanToDecimal(ROMAN_FIFTY, ROMAN_FIFTY), `is`(100))
-        assertThat(romanToDecimal(ROMAN_HUNDRED, ROMAN_HUNDRED), `is`(200))
-        assertThat(romanToDecimal(ROMAN_FIVE_HUNDRED, ROMAN_FIVE_HUNDRED), `is`(1000))
-        assertThat(romanToDecimal(ROMAN_THOUSAND, ROMAN_THOUSAND), `is`(2000))
-    }
-
-    @Test
-    fun concatenationOfThreeRomanOnesIsAccepted() {
+    fun threeRomanOnesCanBeConcatenated() {
         assertThat(romanToDecimal(ROMAN_ONE, ROMAN_ONE, ROMAN_ONE), `is`(3))
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun concatenationOfFourOnesIsRejected() {
+    fun concatenationOfFourRomanOnesIsRejected() {
         romanToDecimal(ROMAN_ONE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE)
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun concatenationOfTwoFivesIsRejected() {
         romanToDecimal(ROMAN_FIVE, ROMAN_FIVE)
+    }
+
+    @Test
+    fun twoRomanTensCanBeConcatenated() {
+        assertThat(romanToDecimal(ROMAN_TEN, ROMAN_TEN), `is`(20))
+    }
+
+    @Test
+    fun twoRomanFiftiesCanBeConcatenated() {
+        assertThat(romanToDecimal(ROMAN_FIFTY, ROMAN_FIFTY), `is`(100))
+    }
+
+    @Test
+    fun twoRomanHundredsCanBeConcatenated() {
+        assertThat(romanToDecimal(ROMAN_HUNDRED, ROMAN_HUNDRED), `is`(200))
+    }
+
+    @Test
+    fun twoRomanFiveHundredsCanBeConcatenated() {
+        assertThat(romanToDecimal(ROMAN_FIVE_HUNDRED, ROMAN_FIVE_HUNDRED), `is`(1000))
+    }
+
+    @Test
+    fun twoRomanThousandsCanBeConcatenated() {
+        assertThat(romanToDecimal(ROMAN_THOUSAND, ROMAN_THOUSAND), `is`(2000))
     }
 }
 
