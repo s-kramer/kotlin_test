@@ -24,11 +24,14 @@ fun romanToDecimal(romanNumber: RomanNumber, vararg romanNumbers: RomanNumber): 
 
     checkPreconditions(romanNumberArray)
 
-    return convertToDecimal(romanNumberArray)
+    val rawConvertedValues = convertRomanNumbersToDecimal(romanNumberArray)
+    return parseRawConvertedValues(rawConvertedValues)
 }
 
-private fun convertToDecimal(romanNumberArray: Array<RomanNumber>): Int {
-    return convertRomanNumbersToDecimal(romanNumberArray).sum()
+private fun parseRawConvertedValues(rawConvertedValues: List<Int>): Int {
+    return rawConvertedValues.groupAdjacentBy { lhs, rhs -> lhs.compareTo(rhs) < 0 }
+            .map { valuesList -> valuesList.last() - valuesList.subList(0, valuesList.size - 1).sum() }
+            .sum()
 }
 
 private fun checkPreconditions(romanNumbers: Array<out RomanNumber>) {
@@ -48,6 +51,4 @@ private fun checkLetterRepetitions(romanNumbers: Array<out RomanNumber>) {
 private fun convertRomanNumbersToDecimal(romanNumber: Array<out RomanNumber>): List<Int> = romanNumber.map(
         ::convertSingleRomanNumberToDecimal)
 
-private fun convertSingleRomanNumberToDecimal(romanNumber: RomanNumber): Int {
-    return romanNumber.number
-}
+private fun convertSingleRomanNumberToDecimal(romanNumber: RomanNumber): Int = romanNumber.number
