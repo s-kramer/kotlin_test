@@ -1,5 +1,7 @@
 package roman
 
+import algorithm.groupAdjacentBy
+
 enum class RomanNumber(val number: Int, val max_repetition: Int = 3) {
 
     ROMAN_ONE(1),
@@ -36,20 +38,11 @@ private fun checkPreconditions(romanNumbers: Array<out RomanNumber>) {
 }
 
 private fun checkLetterRepetitions(romanNumbers: Array<out RomanNumber>) {
-    var repetitionCount = 1
-    var lastNumber = romanNumbers[0]
-    val iterator = romanNumbers.asList().listIterator(1)
-    while (iterator.hasNext()) {
-        val number = iterator.next()
-        if (lastNumber == number) {
-            if (++repetitionCount > number.max_repetition) {
-                throw IllegalArgumentException(
-                        "Concatenation of ${number.max_repetition} characters ${number.name} is not allowed")
-            }
-        } else {
-            lastNumber = number
-            repetitionCount = 1
-        }
+    val groupedRomanNumbers = romanNumbers.asList().groupAdjacentBy { lhs, rhs -> lhs.number == rhs.number }
+    val offendingLettersLists = groupedRomanNumbers.filter { list -> list.size > list[0].max_repetition }
+    for (list in offendingLettersLists) {
+        throw IllegalArgumentException(
+                "Concatenation of ${list.size} characters ${list[0].name} violates maximum repetition count ${list[0].max_repetition}")
     }
 }
 
