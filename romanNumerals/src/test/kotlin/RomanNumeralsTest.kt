@@ -127,5 +127,11 @@ class RomanNumeralsTest {
     fun threeRomanThousandsCanBeConcatenated() {
         assertThat(romanToDecimal(ROMAN_THOUSAND, ROMAN_THOUSAND, ROMAN_THOUSAND), `is`(3000))
     }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun concatenationOfFourThousandsIsRejected() {
+        romanToDecimal(ROMAN_THOUSAND, ROMAN_THOUSAND, ROMAN_THOUSAND, ROMAN_THOUSAND)
+    }
+
 }
 
