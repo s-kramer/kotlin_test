@@ -12,6 +12,7 @@ import org.junit.Test
  * - <s>two different elements</s>
  * - <s>all elements different return list of lists, each with one element</s>
  * - <s>empty list</s>
+ * - singleton list
  * <s>- list with multiple, not subsequent occurrences of an element</s>
  */
 
@@ -73,10 +74,17 @@ class GroupAdjacentTest() {
         assertThat(actual, `is`(expected))
     }
 
+    val lessThanPredicate: (Int, Int) -> Boolean = { left, right -> left.compareTo(right) < 0 }
+
+    @Test
+    fun singletonList() {
+        assertThat(listOf(1).groupAdjacentBy ( Int::equals ), `is`(listOf(listOf(1))))
+        assertThat(listOf(1).groupAdjacentBy ( lessThanPredicate ), `is`(listOf(listOf(1))))
+    }
+
     @Test
     fun groupElementsUntilIncreasingTrendIsOver() {
         val input = listOf(1, 2, 3, 0, 5, 6, 0, 8, 9)
-        val binPredicate: (Int, Int) -> Boolean = { left, right -> left.compareTo(right) < 0 }
-        assertThat(input.groupAdjacentBy(binPredicate), `is`(listOf(listOf(1, 2, 3), listOf(0, 5, 6), listOf(0, 8, 9))))
+        assertThat(input.groupAdjacentBy(lessThanPredicate), `is`(listOf(listOf(1, 2, 3), listOf(0, 5, 6), listOf(0, 8, 9))))
     }
 }
