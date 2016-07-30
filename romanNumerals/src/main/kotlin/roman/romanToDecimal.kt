@@ -1,47 +1,48 @@
 package roman
 
-val ROMAN_ONE = 'I'
+enum class RomanNumber(val representation: Char, val number: Int, val max_repetition: Int = 3) {
 
-val ROMAN_FIVE = 'V'
+    ROMAN_ONE('I', 1),
 
-val ROMAN_TEN = 'X'
+    ROMAN_FIVE('V', 5, max_repetition = 1),
 
-val ROMAN_FIFTY = 'L'
+    ROMAN_TEN('X', 10),
 
-val ROMAN_HUNDRED = 'C'
+    ROMAN_FIFTY('L', 50),
 
-val ROMAN_FIVE_HUNDRED = 'D'
+    ROMAN_HUNDRED('C', 100),
 
-val ROMAN_THOUSAND = 'M'
+    ROMAN_FIVE_HUNDRED('D', 500),
 
-fun romanToDecimal(romanLetter: Char): Int = convertCharToNumber(romanLetter)
-
-private val MAX_REPETITIONS = 3
-
-fun romanToDecimal(romanString: String): Int {
-    checkArguments(romanString)
-
-    return parseToIntList(romanString.toUpperCase()).sum()
+    ROMAN_THOUSAND('M', 1000);
 }
 
-fun  checkArguments(romanString: String) {
-    checkLength(romanString)
-    checkLetterRepetitions(romanString)
+fun romanToDecimal(romanLetter: RomanNumber): Int = convertSingleRomanNumberToDecimal(romanLetter)
+
+fun romanToDecimal(vararg romanNumbers: RomanNumber): Int {
+    checkArguments(romanNumbers)
+
+    return convertRomanNumbersToDecimal(romanNumbers).sum()
 }
 
-fun checkLength(romanString: String) {
-    if (romanString.length == 0) throw IllegalArgumentException("Roman number string cannot be empty")
+fun checkArguments(romanNumbers: Array<out RomanNumber>) {
+    checkLength(romanNumbers)
+    checkLetterRepetitions(romanNumbers)
 }
 
-private fun checkLetterRepetitions(romanString: String) {
+fun checkLength(romanNumbers: Array<out RomanNumber>) {
+    if (romanNumbers.size == 0) throw IllegalArgumentException("Roman number string cannot be empty")
+}
+
+private fun checkLetterRepetitions(romanNumbers: Array<out RomanNumber>) {
     var repetitionCount = 1
-    var lastNumber = romanString[0]
-    val iterator = romanString.substring(1).iterator()
+    var lastNumber = romanNumbers[0]
+    val iterator = romanNumbers.asList().listIterator(1)
     while (iterator.hasNext()) {
         val number = iterator.next()
         if (lastNumber == number) {
-            if (++repetitionCount > MAX_REPETITIONS) {
-                throw IllegalArgumentException("$MAX_REPETITIONS or more identical characters are not allowed")
+            if (++repetitionCount > number.max_repetition) {
+                throw IllegalArgumentException("Concatenation of ${number.max_repetition} characters ${number.representation} is not allowed")
             }
         } else {
             lastNumber = number
@@ -50,19 +51,8 @@ private fun checkLetterRepetitions(romanString: String) {
     }
 }
 
-private fun parseToIntList(romanString: String): List<Int> = romanString.map(::convertCharToNumber)
+private fun convertRomanNumbersToDecimal(romanNumber: Array<out RomanNumber>): List<Int> = romanNumber.map(::convertSingleRomanNumberToDecimal)
 
-private fun convertCharToNumber(romanString: Char): Int {
-    return when (romanString) {
-        ROMAN_ONE -> 1
-        ROMAN_FIVE -> 5
-        ROMAN_TEN -> 10
-        ROMAN_FIFTY -> 50
-        ROMAN_HUNDRED -> 100
-        ROMAN_FIVE_HUNDRED -> 500
-        ROMAN_THOUSAND -> 1000
-        else -> {
-            throw IllegalArgumentException("Unknown roman character ${romanString}")
-        }
-    }
+private fun convertSingleRomanNumberToDecimal(romanNumber: RomanNumber): Int {
+    return romanNumber.number
 }

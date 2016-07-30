@@ -2,11 +2,12 @@
 import org.hamcrest.core.Is.`is`
 import org.junit.Assert.assertThat
 import org.junit.Test
-import roman.*
+import roman.RomanNumber.*
+import roman.romanToDecimal
 
 /**
  * Created by skramer on 7/25/16.
- * - single values, ROMAN_ONE, V, X, L, C, D, M</s>
+ * <s>- single values, ROMAN_ONE, V, X, L, C, D, M</s>
  * - concatenated single values II, III, XX, DD
  * - illegal concatenations IIII, XXXX,
  * - mixed simple additive concatenations XI, VI, LX
@@ -18,20 +19,15 @@ import roman.*
  * <s>- empty string</s>
  * - VX, XXXXL, LXXX, LXXXX, IIX
  * - IX, XXL
+ * - todo: require at least one argument
+ * - todo: split the confirmation test
  */
 
 class RomanNumeralsTest {
 
-    private val ROMAN_UNKNOWN: String = "Z"
-
     @Test(expected = IllegalArgumentException::class)
     fun emptyNumberThrows() {
-        romanToDecimal("")
-    }
-
-    @Test(expected = IllegalArgumentException::class)
-    fun unknownLetterThrowsException() {
-        romanToDecimal(ROMAN_UNKNOWN)
+        romanToDecimal()
     }
 
     @Test
@@ -69,38 +65,33 @@ class RomanNumeralsTest {
         assertThat(romanToDecimal(ROMAN_THOUSAND), `is`(1000))
     }
 
-    private fun concatLetters(vararg value: Char) = StringBuilder().append(value).toString()
-
     @Test
     fun numericalValueOfTwoSingleLettersGivesTheirSum() {
-        val romanNumber = concatLetters(ROMAN_ONE, ROMAN_ONE)
-        assertThat(romanToDecimal(romanNumber), `is`(2))
-    }
-
-    @Test
-    fun caseSensitivityIsIgnored() {
-        val romanString = concatLetters(ROMAN_ONE, ROMAN_ONE, ROMAN_ONE)
-        assertThat(romanToDecimal(romanString.toLowerCase()), `is`(3))
+        assertThat(romanToDecimal(ROMAN_ONE, ROMAN_ONE), `is`(2))
     }
 
     @Test
     fun simpleConcatenationsConfirmationTest() {
-        assertThat(romanToDecimal(concatLetters(ROMAN_FIVE, ROMAN_FIVE)), `is`(10))
-        assertThat(romanToDecimal(concatLetters(ROMAN_TEN, ROMAN_TEN)), `is`(20))
-        assertThat(romanToDecimal(concatLetters(ROMAN_FIFTY, ROMAN_FIFTY)), `is`(100))
-        assertThat(romanToDecimal(concatLetters(ROMAN_HUNDRED, ROMAN_HUNDRED)), `is`(200))
-        assertThat(romanToDecimal(concatLetters(ROMAN_FIVE_HUNDRED, ROMAN_FIVE_HUNDRED)), `is`(1000))
-        assertThat(romanToDecimal(concatLetters(ROMAN_THOUSAND, ROMAN_THOUSAND)), `is`(2000))
+        assertThat(romanToDecimal(ROMAN_TEN, ROMAN_TEN), `is`(20))
+        assertThat(romanToDecimal(ROMAN_FIFTY, ROMAN_FIFTY), `is`(100))
+        assertThat(romanToDecimal(ROMAN_HUNDRED, ROMAN_HUNDRED), `is`(200))
+        assertThat(romanToDecimal(ROMAN_FIVE_HUNDRED, ROMAN_FIVE_HUNDRED), `is`(1000))
+        assertThat(romanToDecimal(ROMAN_THOUSAND, ROMAN_THOUSAND), `is`(2000))
     }
 
     @Test
     fun concatenationOfThreeRomanOnesIsAccepted() {
-        assertThat(romanToDecimal(concatLetters(ROMAN_ONE, ROMAN_ONE, ROMAN_ONE)), `is`(3))
+        assertThat(romanToDecimal(ROMAN_ONE, ROMAN_ONE, ROMAN_ONE), `is`(3))
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun concatenationOfFourOnesIsRejected() {
-        romanToDecimal(concatLetters(ROMAN_ONE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE))
+        romanToDecimal(ROMAN_ONE, ROMAN_ONE, ROMAN_ONE, ROMAN_ONE)
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun concatenationOfTwoFivesIsRejected() {
+        romanToDecimal(ROMAN_FIVE, ROMAN_FIVE)
     }
 }
 
