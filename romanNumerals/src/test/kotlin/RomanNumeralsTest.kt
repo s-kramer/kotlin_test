@@ -7,18 +7,14 @@ import roman.romanToDecimal
 
 /**
  * Created by skramer on 7/25/16.
- * <s>- single values, ROMAN_ONE, V, X, L, C, D, M</s>
- * - concatenated single values II, III, XX, DD
- * - illegal concatenations IIII, XXXX,
+ * - <s>single values, ROMAN_ONE, V, X, L, C, D, M</s>
+ * - <s>concatenated single values II, III, XX, DD</s>
+ * - <s>illegal concatenations IIII, XXXX</s>
  * - mixed simple additive concatenations XI, VI, LX
  * - mixed simple subtractive concatenations IX, XL
- * - illegal subtractive concatenations e.g. IM, XXXL
+ * - illegal subtractive concatenations e.g. IM, XXXL, VX, XXXXL, LXXX, LXXXX, IIX
  * - acceptance test: 1999
  * - boundary values: 1, 3000, 1000, 666, 999, 888
- * <s>- case sensitivity</s>
- * <s>- empty string</s>
- * - VX, XXXXL, LXXX, LXXXX, IIX
- * - IX, XXL
  */
 
 class RomanNumeralsTest {
