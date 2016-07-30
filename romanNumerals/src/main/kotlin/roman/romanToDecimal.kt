@@ -19,8 +19,6 @@ enum class RomanNumber(val number: Int, val max_repetition: Int = 3) {
     ROMAN_THOUSAND(1000);
 }
 
-fun romanToDecimal(romanLetter: RomanNumber): Int = convertSingleRomanNumberToDecimal(romanLetter)
-
 fun romanToDecimal(romanNumber: RomanNumber, vararg romanNumbers: RomanNumber): Int {
     val romanNumberArray = arrayOf(romanNumber, *romanNumbers)
 
@@ -40,6 +38,7 @@ private fun checkPreconditions(romanNumbers: Array<out RomanNumber>) {
 private fun checkLetterRepetitions(romanNumbers: Array<out RomanNumber>) {
     val groupedRomanNumbers = romanNumbers.asList().groupAdjacentBy { lhs, rhs -> lhs.number == rhs.number }
     val offendingLettersLists = groupedRomanNumbers.filter { list -> list.size > list[0].max_repetition }
+
     for (list in offendingLettersLists) {
         throw IllegalArgumentException(
                 "Concatenation of ${list.size} characters ${list[0].name} violates maximum repetition count ${list[0].max_repetition}")
