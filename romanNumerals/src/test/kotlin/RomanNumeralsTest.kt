@@ -99,6 +99,11 @@ class RomanNumeralsTest {
     }
 
     @Test
+    fun threeRomanHundredsCanBeConcatenated() {
+        assertThat(romanToDecimal(ROMAN_HUNDRED, ROMAN_HUNDRED, ROMAN_HUNDRED), `is`(300))
+    }
+
+    @Test
     fun twoRomanFiveHundredsCanBeConcatenated() {
         assertThat(romanToDecimal(ROMAN_FIVE_HUNDRED, ROMAN_FIVE_HUNDRED), `is`(1000))
     }
