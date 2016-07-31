@@ -163,13 +163,20 @@ class RomanNumeralsTest {
     }
 
     @Test
-    fun subtractiveConcatenationOfFiveAndOne() {
+    fun subtractiveConcatenationWithSingleValue() {
         assertThat(romanToDecimal(ROMAN_ONE, ROMAN_FIVE), `is`(4))
         assertThat(romanToDecimal(ROMAN_ONE, ROMAN_TEN), `is`(9))
         assertThat(romanToDecimal(ROMAN_TEN, ROMAN_FIFTY), `is`(40))
         assertThat(romanToDecimal(ROMAN_TEN, ROMAN_HUNDRED), `is`(90))
         assertThat(romanToDecimal(ROMAN_HUNDRED, ROMAN_FIVE_HUNDRED), `is`(400))
         assertThat(romanToDecimal(ROMAN_HUNDRED, ROMAN_THOUSAND), `is`(900))
+    }
+
+    @Test
+    fun subtractiveConcatenationWithMultipleValues() {
+        assertThat(romanToDecimal(ROMAN_TEN, ROMAN_TEN, ROMAN_FIFTY), `is`(30))
+        assertThat(romanToDecimal(ROMAN_HUNDRED, ROMAN_HUNDRED, ROMAN_FIVE_HUNDRED), `is`(300))
+        assertThat(romanToDecimal(ROMAN_HUNDRED, ROMAN_HUNDRED, ROMAN_THOUSAND), `is`(800))
     }
 
 }

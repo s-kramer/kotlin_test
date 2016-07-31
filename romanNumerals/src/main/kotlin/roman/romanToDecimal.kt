@@ -29,24 +29,55 @@ fun romanToDecimal(romanNumber: RomanNumber, vararg romanNumbers: RomanNumber): 
 }
 
 private fun parseRawConvertedValues(rawConvertedValues: List<Int>): Int {
-    return rawConvertedValues.groupAdjacentBy { lhs, rhs -> lhs.compareTo(rhs) < 0 }
-            .map { valuesList -> valuesList.last() - valuesList.subList(0, valuesList.size - 1).sum() }
-            .sum()
+    val increasingValuesGroups = splitIntoGroupsOfIncreasingValues(rawConvertedValues)
+    val increasingValuesGroupsFinalValues = calculateFinalValuesOfIncreasingValuesGroups(increasingValuesGroups)
+    return increasingValuesGroupsFinalValues.sum()
 }
+
+private fun calculateFinalValuesOfIncreasingValuesGroups(increasingValuesGroups: List<List<Int>>): List<Int> {
+    return increasingValuesGroups.map { valuesList -> return@map calculateGroupFinalValue(valuesList) }
+}
+
+private fun calculateGroupFinalValue(valuesList: List<Int>): Int {
+    if (containsOnlyOneDistinctElement(valuesList)) {
+        return valuesList.sum()
+    }
+
+    return calculateFinalValueForSubtractiveGroup(valuesList)
+}
+
+private fun calculateFinalValueForSubtractiveGroup(valuesList: List<Int>) = 2 * valuesList.last() - valuesList.sum()
+
+private fun containsOnlyOneDistinctElement(valuesList: List<Int>) = valuesList.first() == valuesList.last()
+
+private fun splitIntoGroupsOfIncreasingValues(
+        rawConvertedValues: List<Int>) = rawConvertedValues.groupAdjacentBy { lhs, rhs -> lhs.compareTo(rhs) <= 0 }
 
 private fun checkPreconditions(romanNumbers: Array<out RomanNumber>) {
     checkLetterRepetitions(romanNumbers)
 }
 
 private fun checkLetterRepetitions(romanNumbers: Array<out RomanNumber>) {
-    val groupedRomanNumbers = romanNumbers.asList().groupAdjacentBy { lhs, rhs -> lhs.number == rhs.number }
-    val offendingLettersLists = groupedRomanNumbers.filter { list -> list.size > list[0].max_repetition }
+    val groupedRomanNumbers = getGroupsOfEqualNumbers(romanNumbers)
+    val offendingLettersGroups = getGroupsWithTooManyElements(groupedRomanNumbers)
 
-    for (list in offendingLettersLists) {
-        throw IllegalArgumentException(
-                "Concatenation of ${list.size} characters ${list[0].name} violates maximum repetition count ${list[0].max_repetition}")
+    if (!offendingLettersGroups.isEmpty()) {
+        val sb = StringBuilder()
+        offendingLettersGroups.forEach { list ->
+            sb.append(
+                    "Concatenation of ${list.size} characters ${list[0].name} violates maximum repetition count ${list[0].max_repetition}")
+        }
+
+        throw IllegalArgumentException(sb.toString())
+
     }
 }
+
+private fun getGroupsWithTooManyElements(
+        groupedRomanNumbers: List<List<RomanNumber>>) = groupedRomanNumbers.filter { list -> list.size > list[0].max_repetition }
+
+private fun getGroupsOfEqualNumbers(
+        romanNumbers: Array<out RomanNumber>) = romanNumbers.asList().groupAdjacentBy { lhs, rhs -> lhs.number == rhs.number }
 
 private fun convertRomanNumbersToDecimal(romanNumber: Array<out RomanNumber>): List<Int> = romanNumber.map(
         ::convertSingleRomanNumberToDecimal)

@@ -75,6 +75,7 @@ class GroupAdjacentTest() {
     }
 
     val lessThanPredicate: (Int, Int) -> Boolean = { left, right -> left.compareTo(right) < 0 }
+    val lessThanOrEqualsPredicate: (Int, Int) -> Boolean = { left, right -> left.compareTo(right) <= 0 }
 
     @Test
     fun singletonList() {
@@ -86,5 +87,11 @@ class GroupAdjacentTest() {
     fun groupElementsUntilIncreasingTrendIsOver() {
         val input = listOf(1, 2, 3, 0, 5, 6, 0, 8, 9)
         assertThat(input.groupAdjacentBy(lessThanPredicate), `is`(listOf(listOf(1, 2, 3), listOf(0, 5, 6), listOf(0, 8, 9))))
+    }
+
+    @Test
+    fun groupElementsUntilIncreasingTrendIsOverWithRepetitiveElements() {
+        val input = listOf(1, 1, 2, 2, 3, 3, 0, 5, 6, 0, 8, 9)
+        assertThat(input.groupAdjacentBy(lessThanOrEqualsPredicate), `is`(listOf(listOf(1, 1, 2, 2, 3, 3), listOf(0, 5, 6), listOf(0, 8, 9))))
     }
 }
