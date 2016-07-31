@@ -14,8 +14,8 @@ import roman.RomanNumber.*
  * - <s>MMMDCCCLXXXVIII == 3888</s>
  * - <s>mixed simple subtractive concatenations IX, XL</s>
  * - illegal subtractive concatenations e.g. IM, XXXL, VX, XXXXL, LXXX, LXXXX, IIX
- * - acceptance test: 1999
- * - boundary values: 1, 3000, 1000, 666, 999, 888
+ * - <s>acceptance test: 1999</s>
+ * - <s>boundary values: 1, 3000, 1000, 666, 999, 888<s>
  * - exception message text
  * - convert from string? (case sensitivity, empty string, unknown letter)
  */
@@ -183,5 +183,14 @@ class RomanNumeralsTest {
     fun acceptanceTest() {
         assertThat(romanToDecimal(ROMAN_THOUSAND, ROMAN_HUNDRED, ROMAN_THOUSAND,
                                   ROMAN_TEN, ROMAN_HUNDRED, ROMAN_ONE, ROMAN_TEN), `is`(1999))
+    }
+
+    @Test
+    fun remainingBoundaryValues() {
+        assertThat(romanToDecimal(ROMAN_FIVE_HUNDRED, ROMAN_HUNDRED, ROMAN_FIFTY, ROMAN_TEN, ROMAN_FIVE, ROMAN_ONE),
+                   `is`(666))
+
+        assertThat(romanToDecimal(ROMAN_HUNDRED, ROMAN_THOUSAND,
+                                  ROMAN_TEN, ROMAN_HUNDRED, ROMAN_ONE, ROMAN_TEN), `is`(999))
     }
 }
