@@ -12,8 +12,8 @@ import org.junit.Test
  * - <s>two different elements</s>
  * - <s>all elements different return list of lists, each with one element</s>
  * - <s>empty list</s>
- * - singleton list
- * <s>- list with multiple, not subsequent occurrences of an element</s>
+ * - <s>singleton list</s>
+ * - <s>list with multiple, not subsequent occurrences of an element</s>
  */
 
 class GroupAdjacentTest() {
