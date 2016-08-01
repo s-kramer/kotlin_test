@@ -1,6 +1,8 @@
 package roman
 
 import algorithm.groupAdjacentBy
+import java.lang.Math.max
+import java.lang.Math.min
 
 enum class RomanNumber(val number: Int, val char: Char, val max_repetition: Int = 3) {
 
@@ -66,6 +68,22 @@ private fun splitIntoGroupsOfIncreasingValues(
 
 private fun checkPreconditions(romanNumbers: List<RomanNumber>) {
     checkLetterRepetitions(romanNumbers)
+    checkLetterWeighting(romanNumbers)
+}
+
+fun checkLetterWeighting(romanNumbers: List<RomanNumber>) {
+    val decimalValues = convertRomanNumbersToDecimal(romanNumbers)
+    val groupedIncreasingDecimalValues = splitIntoGroupsOfIncreasingValues(decimalValues)
+    val weightingOffendingGroups: List<List<Int>> = groupedIncreasingDecimalValues.flatMap { list ->
+        list.groupAdjacentBy { lhs, rhs -> max(lhs, rhs) / min(lhs, rhs) > 10 }
+            .filter { list -> list.size > 1 }
+    }
+
+    if (!weightingOffendingGroups.isEmpty()) {
+        val sb = StringBuilder()
+        weightingOffendingGroups.forEach { sb.append(it) }
+        throw IllegalArgumentException("Illegal letter weighting: ${sb.toString()}")
+    }
 }
 
 private fun checkLetterRepetitions(romanNumbers: List<RomanNumber>) {

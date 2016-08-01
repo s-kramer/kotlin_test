@@ -4,6 +4,7 @@ import org.hamcrest.core.Is.`is`
 import org.junit.Assert.assertThat
 import org.junit.Test
 import roman.RomanNumber.*
+import kotlin.test.assertTrue
 
 /**
  * Created by skramer on 7/25/16.
@@ -17,7 +18,7 @@ import roman.RomanNumber.*
  * - <s>acceptance test: 1999</s>
  * - <s>boundary values: 1, 3000, 1000, 666, 999, 888<s>
  * - exception message text
- * - convert from string? (case sensitivity, empty string, unknown letter)
+ * - <s>convert from string? (case sensitivity, empty string, unknown letter)</s>
  */
 
 class RomanNumeralsTest {
@@ -215,5 +216,23 @@ class RomanNumeralsTest {
     @Test(expected = IllegalArgumentException::class)
     fun unknownLetterIsRejected() {
         romanToDecimal("Z")
+    }
+
+    @Test
+    fun illegalSubtractiveConcatenationsAreRejected() {
+        assertTrue(throwsIllegalArgumentException("IM"))
+        assertTrue(throwsIllegalArgumentException("LM"))
+        assertTrue(throwsIllegalArgumentException("XD"))
+        assertTrue(throwsIllegalArgumentException("ID"))
+        assertTrue(throwsIllegalArgumentException("LM"))
+    }
+
+    private fun throwsIllegalArgumentException(romanString: String): Boolean {
+        try {
+            romanToDecimal(romanString)
+            return false
+        } catch (_ : IllegalArgumentException) {
+            return true
+        }
     }
 }
