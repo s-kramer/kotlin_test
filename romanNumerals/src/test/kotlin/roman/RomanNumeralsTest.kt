@@ -201,4 +201,9 @@ class RomanNumeralsTest {
         assertThat(romanToDecimal("IX"), `is`(9))
         assertThat(romanToDecimal("CCXC"), `is`(290))
     }
+
+    @Test
+    fun emptyString() {
+        assertThat(romanToDecimal(""), `is`(0))
+    }
 }
