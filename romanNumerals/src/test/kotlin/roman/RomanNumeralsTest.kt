@@ -193,4 +193,12 @@ class RomanNumeralsTest {
         assertThat(romanToDecimal(ROMAN_HUNDRED, ROMAN_THOUSAND,
                                   ROMAN_TEN, ROMAN_HUNDRED, ROMAN_ONE, ROMAN_TEN), `is`(999))
     }
+
+    @Test
+    fun convertFromString() {
+        assertThat(romanToDecimal("MMMDCCCLXXXVIII"), `is`(3888))
+        assertThat(romanToDecimal("MMM"), `is`(3000))
+        assertThat(romanToDecimal("IX"), `is`(9))
+        assertThat(romanToDecimal("CCXC"), `is`(290))
+    }
 }

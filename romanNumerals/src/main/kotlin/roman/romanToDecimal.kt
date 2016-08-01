@@ -2,29 +2,39 @@ package roman
 
 import algorithm.groupAdjacentBy
 
-enum class RomanNumber(val number: Int, val max_repetition: Int = 3) {
+enum class RomanNumber(val number: Int, val char: Char, val max_repetition: Int = 3) {
 
-    ROMAN_ONE(1),
+    ROMAN_ONE(1, 'I'),
 
-    ROMAN_FIVE(5, max_repetition = 1),
+    ROMAN_FIVE(5, 'V', max_repetition = 1),
 
-    ROMAN_TEN(10),
+    ROMAN_TEN(10, 'X'),
 
-    ROMAN_FIFTY(50, max_repetition = 1),
+    ROMAN_FIFTY(50, 'L', max_repetition = 1),
 
-    ROMAN_HUNDRED(100),
+    ROMAN_HUNDRED(100, 'C'),
 
-    ROMAN_FIVE_HUNDRED(500, max_repetition = 1),
+    ROMAN_FIVE_HUNDRED(500, 'D', max_repetition = 1),
 
-    ROMAN_THOUSAND(1000);
+    ROMAN_THOUSAND(1000, 'M');
 }
 
 fun romanToDecimal(romanNumber: RomanNumber, vararg romanNumbers: RomanNumber): Int {
-    val romanNumberArray = arrayOf(romanNumber, *romanNumbers)
+    return romanToDecimal(listOf(romanNumber, *romanNumbers))
+}
 
-    checkPreconditions(romanNumberArray)
+fun romanToDecimal(romanNumberString: String): Int {
+    val romanNumberList = romanNumberString
+            .map { letter -> RomanNumber.values().find { enum_value -> enum_value.char == letter } }
+            .toList()
 
-    val rawConvertedValues = convertRomanNumbersToDecimal(romanNumberArray)
+    return romanToDecimal(romanNumberList.requireNoNulls())
+}
+
+fun romanToDecimal(romanNumberList: List<RomanNumber>): Int {
+    checkPreconditions(romanNumberList)
+
+    val rawConvertedValues = convertRomanNumbersToDecimal(romanNumberList)
     return parseRawConvertedValues(rawConvertedValues)
 }
 
@@ -53,11 +63,11 @@ private fun containsOnlyOneDistinctElement(valuesList: List<Int>) = valuesList.f
 private fun splitIntoGroupsOfIncreasingValues(
         rawConvertedValues: List<Int>) = rawConvertedValues.groupAdjacentBy { lhs, rhs -> lhs.compareTo(rhs) <= 0 }
 
-private fun checkPreconditions(romanNumbers: Array<out RomanNumber>) {
+private fun checkPreconditions(romanNumbers: List<RomanNumber>) {
     checkLetterRepetitions(romanNumbers)
 }
 
-private fun checkLetterRepetitions(romanNumbers: Array<out RomanNumber>) {
+private fun checkLetterRepetitions(romanNumbers: List<RomanNumber>) {
     val groupedRomanNumbers = getGroupsOfEqualNumbers(romanNumbers)
     val offendingLettersGroups = getGroupsWithTooManyElements(groupedRomanNumbers)
 
@@ -77,9 +87,9 @@ private fun getGroupsWithTooManyElements(
         groupedRomanNumbers: List<List<RomanNumber>>) = groupedRomanNumbers.filter { list -> list.size > list[0].max_repetition }
 
 private fun getGroupsOfEqualNumbers(
-        romanNumbers: Array<out RomanNumber>) = romanNumbers.asList().groupAdjacentBy { lhs, rhs -> lhs.number == rhs.number }
+        romanNumbers: List<RomanNumber>) = romanNumbers.groupAdjacentBy { lhs, rhs -> lhs.number == rhs.number }
 
-private fun convertRomanNumbersToDecimal(romanNumber: Array<out RomanNumber>): List<Int> = romanNumber.map(
+private fun convertRomanNumbersToDecimal(romanNumber: List<RomanNumber>): List<Int> = romanNumber.map(
         ::convertSingleRomanNumberToDecimal)
 
 private fun convertSingleRomanNumberToDecimal(romanNumber: RomanNumber): Int = romanNumber.number
