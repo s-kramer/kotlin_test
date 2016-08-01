@@ -54,7 +54,7 @@ private fun calculateFinalValuesOfIncreasingValuesGroups(increasingValuesGroups:
 }
 
 private fun calculateGroupFinalValue(valuesList: List<Int>): Int {
-    if (containsOnlyOneDistinctElement(valuesList)) {
+    if (!isIncreasingGroupSubtractive(valuesList)) {
         return valuesList.sum()
     }
 
@@ -63,7 +63,7 @@ private fun calculateGroupFinalValue(valuesList: List<Int>): Int {
 
 private fun calculateFinalValueForSubtractiveGroup(valuesList: List<Int>) = 2 * valuesList.last() - valuesList.sum()
 
-private fun containsOnlyOneDistinctElement(valuesList: List<Int>) = valuesList.first() == valuesList.last()
+private fun isIncreasingGroupSubtractive(valuesList: List<Int>) = valuesList.first() != valuesList.last()
 
 private fun <E : Comparable<E>> splitIntoGroupsOfIncreasingValues(
         rawConvertedValues: List<E>) = rawConvertedValues.groupAdjacentBy { lhs, rhs -> lhs.compareTo(rhs) <= 0 }
