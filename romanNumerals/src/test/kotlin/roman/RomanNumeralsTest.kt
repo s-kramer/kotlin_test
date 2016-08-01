@@ -211,4 +211,9 @@ class RomanNumeralsTest {
     fun caseSensitivityIsIgnored() {
         assertThat(romanToDecimal("mmmdccclxxxviii"), `is`(3888))
     }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun unknownLetterIsRejected() {
+        romanToDecimal("Z")
+    }
 }
