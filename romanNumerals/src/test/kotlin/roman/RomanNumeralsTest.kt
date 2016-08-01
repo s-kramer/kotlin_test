@@ -206,4 +206,9 @@ class RomanNumeralsTest {
     fun emptyString() {
         assertThat(romanToDecimal(""), `is`(0))
     }
+
+    @Test
+    fun caseSensitivityIsIgnored() {
+        assertThat(romanToDecimal("mmmdccclxxxviii"), `is`(3888))
+    }
 }

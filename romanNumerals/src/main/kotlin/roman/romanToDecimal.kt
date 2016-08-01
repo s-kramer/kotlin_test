@@ -25,6 +25,7 @@ fun romanToDecimal(romanNumber: RomanNumber, vararg romanNumbers: RomanNumber): 
 
 fun romanToDecimal(romanNumberString: String): Int {
     val romanNumberList = romanNumberString
+            .map { it.toUpperCase() }
             .map { letter -> RomanNumber.values().find { enum_value -> enum_value.char == letter } }
             .toList()
 
