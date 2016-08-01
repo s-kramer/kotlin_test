@@ -235,4 +235,9 @@ class RomanNumeralsTest {
             return true
         }
     }
+
+    @Test
+    fun specificSubtractiveConcatenationsAreHandled() {
+        assertTrue(throwsIllegalArgumentException("VX"))
+    }
 }

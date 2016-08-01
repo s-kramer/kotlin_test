@@ -1,24 +1,26 @@
 package roman
 
 import algorithm.groupAdjacentBy
-import java.lang.Math.max
-import java.lang.Math.min
 
-enum class RomanNumber(val number: Int, val char: Char, val max_repetition: Int = 3) {
+enum class RomanNumber(val number: Int, val char: Char, val allowedSubtractiveNumber: RomanNumber? = null, val max_repetition: Int = 3) {
 
     ROMAN_ONE(1, 'I'),
 
-    ROMAN_FIVE(5, 'V', max_repetition = 1),
+    ROMAN_FIVE(5, 'V', allowedSubtractiveNumber = ROMAN_ONE, max_repetition = 1),
 
-    ROMAN_TEN(10, 'X'),
+    ROMAN_TEN(10, 'X', allowedSubtractiveNumber = ROMAN_ONE),
 
-    ROMAN_FIFTY(50, 'L', max_repetition = 1),
+    ROMAN_FIFTY(50, 'L', allowedSubtractiveNumber = ROMAN_TEN, max_repetition = 1),
 
-    ROMAN_HUNDRED(100, 'C'),
+    ROMAN_HUNDRED(100, 'C', allowedSubtractiveNumber = ROMAN_TEN),
 
-    ROMAN_FIVE_HUNDRED(500, 'D', max_repetition = 1),
+    ROMAN_FIVE_HUNDRED(500, 'D', allowedSubtractiveNumber = ROMAN_HUNDRED, max_repetition = 1),
 
-    ROMAN_THOUSAND(1000, 'M');
+    ROMAN_THOUSAND(1000, 'M', allowedSubtractiveNumber = ROMAN_HUNDRED);
+
+    fun isSubtractiveAllowed(romanNumber: RomanNumber): Boolean {
+        return romanNumber == this || (allowedSubtractiveNumber != null && romanNumber == allowedSubtractiveNumber)
+    }
 }
 
 fun romanToDecimal(romanNumber: RomanNumber, vararg romanNumbers: RomanNumber): Int {
@@ -63,8 +65,8 @@ private fun calculateFinalValueForSubtractiveGroup(valuesList: List<Int>) = 2 * 
 
 private fun containsOnlyOneDistinctElement(valuesList: List<Int>) = valuesList.first() == valuesList.last()
 
-private fun splitIntoGroupsOfIncreasingValues(
-        rawConvertedValues: List<Int>) = rawConvertedValues.groupAdjacentBy { lhs, rhs -> lhs.compareTo(rhs) <= 0 }
+private fun <E : Comparable<E>> splitIntoGroupsOfIncreasingValues(
+        rawConvertedValues: List<E>) = rawConvertedValues.groupAdjacentBy { lhs, rhs -> lhs.compareTo(rhs) <= 0 }
 
 private fun checkPreconditions(romanNumbers: List<RomanNumber>) {
     checkLetterRepetitions(romanNumbers)
@@ -72,16 +74,18 @@ private fun checkPreconditions(romanNumbers: List<RomanNumber>) {
 }
 
 fun checkLetterWeighting(romanNumbers: List<RomanNumber>) {
-    val decimalValues = convertRomanNumbersToDecimal(romanNumbers)
-    val groupedIncreasingDecimalValues = splitIntoGroupsOfIncreasingValues(decimalValues)
-    val weightingOffendingGroups: List<List<Int>> = groupedIncreasingDecimalValues.flatMap { list ->
-        list.groupAdjacentBy { lhs, rhs -> max(lhs, rhs) / min(lhs, rhs) > 10 }
-            .filter { list -> list.size > 1 }
+    val groupedIncreasingRomanValues: List<List<RomanNumber>> = splitIntoGroupsOfIncreasingValues(romanNumbers)
+    val offendingPairs = arrayListOf<Pair<RomanNumber, RomanNumber>>()
+    groupedIncreasingRomanValues.flatMap { list ->
+        list.zip(list.subList(1, list.size)) {
+            lhs, rhs ->
+            if (!rhs.isSubtractiveAllowed(lhs)) offendingPairs.add(rhs to lhs)
+        }
     }
 
-    if (!weightingOffendingGroups.isEmpty()) {
+    if (!offendingPairs.isEmpty()) {
         val sb = StringBuilder()
-        weightingOffendingGroups.forEach { sb.append(it) }
+        offendingPairs.forEach { sb.append(it) }
         throw IllegalArgumentException("Illegal letter weighting: ${sb.toString()}")
     }
 }
