@@ -14,10 +14,9 @@ import kotlin.test.assertTrue
  * - <s>mixed simple additive concatenations XI, VI, LX</s>
  * - <s>MMMDCCCLXXXVIII == 3888</s>
  * - <s>mixed simple subtractive concatenations IX, XL</s>
- * - illegal subtractive concatenations e.g. IM, XXXL, VX, XXXXL, LXXX, LXXXX, IIX
+ * - <s>illegal subtractive concatenations e.g. IM, XXXL, VX, XXXXL, LXXX, LXXXX, IIX</s>
  * - <s>acceptance test: 1999</s>
  * - <s>boundary values: 1, 3000, 1000, 666, 999, 888<s>
- * - exception message text
  * - <s>convert from string? (case sensitivity, empty string, unknown letter)</s>
  */
 
