@@ -1,26 +1,29 @@
 package roman
 
 import algorithm.groupAdjacentBy
+import roman.RomanNumber.*
 
-enum class RomanNumber(val number: Int, val char: Char, val allowedSubtractiveNumber: RomanNumber? = null, val max_repetition: Int = 3) {
+enum class RomanNumber(val number: Int, val char: Char, val max_repetition: Int = 3) {
 
     ROMAN_ONE(1, 'I'),
 
-    ROMAN_FIVE(5, 'V', allowedSubtractiveNumber = ROMAN_ONE, max_repetition = 1),
+    ROMAN_FIVE(5, 'V', max_repetition = 1),
 
-    ROMAN_TEN(10, 'X', allowedSubtractiveNumber = ROMAN_ONE),
+    ROMAN_TEN(10, 'X'),
 
-    ROMAN_FIFTY(50, 'L', allowedSubtractiveNumber = ROMAN_TEN, max_repetition = 1),
+    ROMAN_FIFTY(50, 'L', max_repetition = 1),
 
-    ROMAN_HUNDRED(100, 'C', allowedSubtractiveNumber = ROMAN_TEN),
+    ROMAN_HUNDRED(100, 'C'),
 
-    ROMAN_FIVE_HUNDRED(500, 'D', allowedSubtractiveNumber = ROMAN_HUNDRED, max_repetition = 1),
+    ROMAN_FIVE_HUNDRED(500, 'D', max_repetition = 1),
 
-    ROMAN_THOUSAND(1000, 'M', allowedSubtractiveNumber = ROMAN_HUNDRED);
+    ROMAN_THOUSAND(1000, 'M');
 
-    fun isSubtractiveAllowed(romanNumber: RomanNumber): Boolean {
-        return romanNumber == this || (allowedSubtractiveNumber != null && romanNumber == allowedSubtractiveNumber)
-    }
+}
+
+private fun getAlloweSubtractionConcatenations(): Map<RomanNumber, RomanNumber> {
+    return mapOf(ROMAN_FIVE to ROMAN_ONE, ROMAN_TEN to ROMAN_ONE, ROMAN_FIFTY to ROMAN_TEN, ROMAN_HUNDRED to ROMAN_TEN,
+                 ROMAN_FIVE_HUNDRED to ROMAN_HUNDRED, ROMAN_THOUSAND to ROMAN_HUNDRED)
 }
 
 fun romanToDecimal(romanNumber: RomanNumber, vararg romanNumbers: RomanNumber): Int {
@@ -30,7 +33,7 @@ fun romanToDecimal(romanNumber: RomanNumber, vararg romanNumbers: RomanNumber): 
 fun romanToDecimal(romanNumberString: String): Int {
     val romanNumberList = romanNumberString
             .map { it.toUpperCase() }
-            .map { letter -> RomanNumber.values().find { enum_value -> enum_value.char == letter } }
+            .map { letter -> values().find { enum_value -> enum_value.char == letter } }
             .toList()
 
     return romanToDecimal(romanNumberList.requireNoNulls())
@@ -63,7 +66,7 @@ private fun calculateGroupFinalValue(valuesList: List<Int>): Int {
 
 private fun calculateFinalValueForSubtractiveGroup(valuesList: List<Int>) = 2 * valuesList.last() - valuesList.sum()
 
-private fun isIncreasingGroupSubtractive(valuesList: List<Int>) = valuesList.first() != valuesList.last()
+private fun <E> isIncreasingGroupSubtractive(valuesList: List<E>) = valuesList.first() != valuesList.last()
 
 private fun <E : Comparable<E>> splitIntoGroupsOfIncreasingValues(
         rawConvertedValues: List<E>) = rawConvertedValues.groupAdjacentBy { lhs, rhs -> lhs.compareTo(rhs) <= 0 }
@@ -75,17 +78,12 @@ private fun checkPreconditions(romanNumbers: List<RomanNumber>) {
 
 fun checkLetterWeighting(romanNumbers: List<RomanNumber>) {
     val groupedIncreasingRomanValues: List<List<RomanNumber>> = splitIntoGroupsOfIncreasingValues(romanNumbers)
-    val offendingPairs = arrayListOf<Pair<RomanNumber, RomanNumber>>()
-    groupedIncreasingRomanValues.flatMap { list ->
-        list.zip(list.subList(1, list.size)) {
-            lhs, rhs ->
-            if (!rhs.isSubtractiveAllowed(lhs)) offendingPairs.add(rhs to lhs)
-        }
-    }
+    val offendingRomanNumbers = groupedIncreasingRomanValues.filter { isIncreasingGroupSubtractive(it) }
+            .filter { list -> list.size > 2 || getAlloweSubtractionConcatenations()[list.last()] != list.first()  }
 
-    if (!offendingPairs.isEmpty()) {
+    if (!offendingRomanNumbers.isEmpty()) {
         val sb = StringBuilder()
-        offendingPairs.forEach { sb.append(it) }
+        offendingRomanNumbers.forEach { sb.append(it) }
         throw IllegalArgumentException("Illegal letter weighting: ${sb.toString()}")
     }
 }

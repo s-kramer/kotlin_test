@@ -174,13 +174,6 @@ class RomanNumeralsTest {
     }
 
     @Test
-    fun subtractiveConcatenationWithMultipleValues() {
-        assertThat(romanToDecimal(ROMAN_TEN, ROMAN_TEN, ROMAN_FIFTY), `is`(30))
-        assertThat(romanToDecimal(ROMAN_HUNDRED, ROMAN_HUNDRED, ROMAN_FIVE_HUNDRED), `is`(300))
-        assertThat(romanToDecimal(ROMAN_HUNDRED, ROMAN_HUNDRED, ROMAN_THOUSAND), `is`(800))
-    }
-
-    @Test
     fun acceptanceTest() {
         assertThat(romanToDecimal(ROMAN_THOUSAND, ROMAN_HUNDRED, ROMAN_THOUSAND,
                                   ROMAN_TEN, ROMAN_HUNDRED, ROMAN_ONE, ROMAN_TEN), `is`(1999))
